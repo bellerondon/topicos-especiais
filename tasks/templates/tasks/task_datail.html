@@ -1,0 +1,15 @@
+<!-- tasks/templates/tasks/task_detail.html -->
+
+{% extends '../../../users/templates/base.html' %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2>{{ task.title }}</h2>
+        <p><strong>Descrição:</strong> {{ task.description }}</p>
+        <p><strong>Status:</strong> {{ task.get_status_display }}</p>
+        <p><strong>Responsável:</strong> {{ task.assigned_to.username }}</p>
+        <a href="{% url 'task_edit' task.id %}" class="btn btn-primary">Editar</a>
+        <a href="{% url 'task_delete' task.id %}" class="btn btn-danger">Deletar</a>
+        <a href="{% url 'task_list' %}" class="btn btn-secondary">Voltar para a Lista</a>
+    </div>
+{% endblock %}

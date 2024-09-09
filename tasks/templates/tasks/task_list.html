@@ -1,0 +1,51 @@
+<!-- tasks/templates/tasks/task_list.html -->
+
+{% extends "tasks/base.html" %}
+
+
+
+{% block content %}
+    <div class="mt-4">
+        <h2>Minhas Tarefas</h2>
+        <div class="mb-3">
+            <a href="{% url 'task_create' %}" class="btn btn-success">Criar Nova Tarefa</a>
+        </div>
+        <form method="GET" class="form-inline mb-3">
+            <label for="status" class="mr-2">Filtrar por status:</label>
+            <select name="status" id="status" class="form-control mr-2">
+                <option value="">Todos</option>
+                <option value="pending" {% if status_filter == 'pending' %}selected{% endif %}>Pendente</option>
+                <option value="in_progress" {% if status_filter == 'in_progress' %}selected{% endif %}>Em andamento</option>
+                <option value="completed" {% if status_filter == 'completed' %}selected{% endif %}>Concluída</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Filtrar</button>
+        </form>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Título</th>
+                <th>Status</th>
+                <th>Responsável</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for task in tasks %}
+                <tr>
+                    <td><a href="{% url 'task_detail' task.id %}">{{ task.title }}</a></td>
+                    <td>{{ task.get_status_display }}</td>
+                    <td>{{ task.assigned_to.username }}</td>
+                    <td>
+                        <a href="{% url 'task_edit' task.id %}" class="btn btn-sm btn-primary">Editar</a>
+                        <a href="{% url 'task_delete' task.id %}" class="btn btn-sm btn-danger">Deletar</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4">Você não tem tarefas.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

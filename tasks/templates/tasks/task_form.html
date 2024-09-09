@@ -1,0 +1,15 @@
+<!-- tasks/templates/tasks/task_form.html -->
+
+{% extends './base.html' %}
+
+{% block content %}
+    <div class="mt-4">
+        <h2>{{ title }}</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <a href="{% url 'task_list' %}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+{% endblock %}
